@@ -5,6 +5,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/ ./packages/
 COPY apps/console/ ./apps/console/
 COPY apps/core/package.json ./apps/core/package.json
+COPY apps/cli/package.json ./apps/cli/package.json
 RUN pnpm install --frozen-lockfile
 RUN pnpm --filter @velora/console build
 FROM nginxinc/nginx-unprivileged:1.29-alpine

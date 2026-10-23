@@ -574,12 +574,7 @@
     "schemas": {
       "User": {
         "type": "object",
-        "required": [
-          "id",
-          "email",
-          "role",
-          "disabled"
-        ],
+        "required": ["id", "email", "role", "disabled"],
         "properties": {
           "id": {
             "type": "string",
@@ -591,10 +586,7 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "admin",
-              "user"
-            ]
+            "enum": ["admin", "user"]
           },
           "disabled": {
             "type": "boolean"
@@ -603,13 +595,7 @@
       },
       "Node": {
         "type": "object",
-        "required": [
-          "id",
-          "name",
-          "description",
-          "status",
-          "created_at"
-        ],
+        "required": ["id", "name", "description", "status", "created_at"],
         "properties": {
           "id": {
             "type": "string",
@@ -623,9 +609,7 @@
           },
           "status": {
             "type": "string",
-            "enum": [
-              "unconfigured"
-            ]
+            "enum": ["unconfigured"]
           },
           "created_at": {
             "type": "string",
@@ -635,10 +619,7 @@
       },
       "NodeInput": {
         "type": "object",
-        "required": [
-          "name",
-          "description"
-        ],
+        "required": ["name", "description"],
         "properties": {
           "name": {
             "type": "string",
@@ -653,10 +634,7 @@
       },
       "LoginInput": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
@@ -671,18 +649,11 @@
       },
       "Error": {
         "type": "object",
-        "required": [
-          "error",
-          "request_id"
-        ],
+        "required": ["error", "request_id"],
         "properties": {
           "error": {
             "type": "object",
-            "required": [
-              "code",
-              "message",
-              "details"
-            ],
+            "required": ["code", "message", "details"],
             "properties": {
               "code": {
                 "type": "string"
@@ -702,27 +673,18 @@
       },
       "Health": {
         "type": "object",
-        "required": [
-          "status"
-        ],
+        "required": ["status"],
         "properties": {
           "status": {
             "type": "string",
-            "enum": [
-              "ok"
-            ]
+            "enum": ["ok"]
           }
         }
       },
       "AccountInput": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "email",
-          "password",
-          "role",
-          "current_password"
-        ],
+        "required": ["email", "password", "role", "current_password"],
         "properties": {
           "email": {
             "type": "string",
@@ -736,10 +698,7 @@
           },
           "role": {
             "type": "string",
-            "enum": [
-              "admin",
-              "user"
-            ]
+            "enum": ["admin", "user"]
           },
           "current_password": {
             "type": "string"
@@ -749,18 +708,11 @@
       "AccountUpdate": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "role",
-          "disabled",
-          "current_password"
-        ],
+        "required": ["role", "disabled", "current_password"],
         "properties": {
           "role": {
             "type": "string",
-            "enum": [
-              "admin",
-              "user"
-            ]
+            "enum": ["admin", "user"]
           },
           "disabled": {
             "type": "boolean"
@@ -773,10 +725,7 @@
       "PasswordInput": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "current_password",
-          "new_password"
-        ],
+        "required": ["current_password", "new_password"],
         "properties": {
           "current_password": {
             "type": "string"
@@ -792,10 +741,7 @@
       "ProfileInput": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "email",
-          "current_password"
-        ],
+        "required": ["email", "current_password"],
         "properties": {
           "email": {
             "type": "string",
@@ -809,9 +755,7 @@
       "RevokeInput": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "current_password"
-        ],
+        "required": ["current_password"],
         "properties": {
           "current_password": {
             "type": "string"

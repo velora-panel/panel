@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import devtools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [vue(), tailwindcss(), devtools()],
- resolve: {alias:{'@':resolve(import.meta.dirname,'src')}},
+  resolve: { alias: { '@': resolve(import.meta.dirname, 'src') } },
   server: {
     fs: {
       deny: [

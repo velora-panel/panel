@@ -19,29 +19,34 @@ Resolved from installed packages and go.mod. Node 24.19.0, pnpm 11.21.0; Go modu
 
 ## @velora/console
 
-| Package                  | Resolved version |
-| ------------------------ | ---------------- |
-| @tanstack/vue-query      | 5.104.5          |
-| @vueuse/core             | 15.0.0           |
-| lucide-vue-next          | 0.577.0          |
-| pinia                    | 4.1.0            |
-| reka-ui                  | 2.11.0           |
-| vee-validate             | 4.15.1           |
-| vue                      | 3.5.44           |
-| vue-router               | 5.4.0            |
-| zod                      | 4.6.7            |
-| @playwright/test         | 1.64.1           |
-| @tailwindcss/vite        | 4.3.3            |
-| @types/node              | 24.19.2          |
-| @vitejs/plugin-vue       | 6.0.10           |
-| @vitest/coverage-v8      | 5.0.5            |
-| @vue/test-utils          | 2.5.1            |
-| jsdom                    | 30.1.3           |
-| tailwindcss              | 4.3.3            |
-| vite                     | 8.3.4            |
-| vite-plugin-vue-devtools | 8.2.1            |
-| vitest                   | 5.0.5            |
-| vue-tsc                  | 3.3.13           |
+| Package                                             | Resolved version |
+| --------------------------------------------------- | ---------------- |
+| @tanstack/vue-query                                 | 5.104.5          |
+| @vueuse/core                                        | 15.0.0           |
+| @lucide/vue                                         | 1.61.0           |
+| shadcn-vue (generation tool, not installed runtime) | 2.8.2            |
+| cn                                                  | 0.5.0            |
+| class-variance-authority                            | 0.7.1            |
+| tw-animate-css                                      | 1.4.0            |
+| vue-sonner                                          | 2.0.9            |
+| pinia                                               | 4.1.0            |
+| reka-ui                                             | 2.11.0           |
+| vee-validate                                        | 4.15.1           |
+| vue                                                 | 3.5.44           |
+| vue-router                                          | 5.4.0            |
+| zod                                                 | 4.6.7            |
+| @playwright/test                                    | 1.64.1           |
+| @tailwindcss/vite                                   | 4.3.3            |
+| @types/node                                         | 24.19.2          |
+| @vitejs/plugin-vue                                  | 6.0.10           |
+| @vitest/coverage-v8                                 | 5.0.5            |
+| @vue/test-utils                                     | 2.5.1            |
+| jsdom                                               | 30.1.3           |
+| tailwindcss                                         | 4.3.3            |
+| vite                                                | 8.3.4            |
+| vite-plugin-vue-devtools                            | 8.2.1            |
+| vitest                                              | 5.0.5            |
+| vue-tsc                                             | 3.3.13           |
 
 ## @velora/api-client
 

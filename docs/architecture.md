@@ -1,6 +1,6 @@
 # Architecture
 
-Core: configuration → dependency wiring → Fiber transport → auth/Stations services → repository adapter → generated sqlc queries → PostgreSQL. Services own validation and authorization. Handler responses use domain DTOs rather than generated database rows. Constructor interfaces exist only at testable boundaries.
+Core: configuration → dependency wiring → Fiber transport → auth/Nodes services → repository adapter → generated sqlc queries → PostgreSQL. Services own validation and authorization. Handler responses use domain DTOs rather than generated database rows. Constructor interfaces exist only at testable boundaries.
 
 Console: history-mode Vue Router → shell and feature components → TanStack Query and generated OpenAPI types → same-origin Core API. Pinia holds only the sidebar preference. No authentication token or remote user object is persisted in localStorage. A server session check guards entry into the shell; every protected API independently authenticates the session.
 
@@ -8,12 +8,16 @@ Console: history-mode Vue Router → shell and feature components → TanStack Q
 
 All browser mutations require exact Origin matching PUBLIC_URL and application/json, including login. SameSite=Strict and HttpOnly cookies supplement that policy. CORS is deliberately closed: deploy Console and Core under one origin, using the Vite or production reverse proxy. No arbitrary forwarded IP headers are trusted. Request IDs are generated server-side.
 
-Opaque 256-bit tokens are hashed with SHA-256 before persistence. Sessions last 12 hours and are deleted on logout. Password hashes pin Argon2id v19, 64 MiB, three passes and two lanes, with independent 128-bit salts. Administrator creation is a local CLI command, never a public endpoint. Admins create Station metadata; authenticated users can read it.
+Opaque 256-bit tokens are hashed with SHA-256 before persistence. Sessions last 12 hours and are deleted on logout. Password hashes pin Argon2id v19, 64 MiB, three passes and two lanes, with independent 128-bit salts. Initial administrator bootstrap is a privileged local CLI command. Authenticated administrators can also create accounts through reauthenticated API operations. Admins create Node metadata; authenticated users can read it.
 
 Login attempts are limited to five per minute per direct peer IP in one process. Behind the included proxy this conservatively limits all clients together. Deploy one Core replica; distributed limits and explicitly trusted proxy configuration are future work. Redis is not an unsafe fallback for any security control: it currently provides only optional diagnostic connectivity. Its failure is logged without blocking Core.
 
-Stations are always `unconfigured`. The Station list is bounded to the newest 100 records. Instances and Blueprints only have minimal reserved tables; no write API exists. Beacon, Fleet, Recipe, Allocation, Volume, Snapshot, Task and Pulse behavior is not implemented. Avoid speculative interfaces for these concepts until their requirements are known.
+Nodes are always `unconfigured`. The Node list is bounded to the newest 100 records. Instances and Blueprints only have minimal reserved tables; no write API exists. Beacon, Fleet, Recipe, Allocation, Volume, Snapshot, Task and Pulse behavior is not implemented. Avoid speculative interfaces for these concepts until their requirements are known.
 
 Brand colors match the supplied references. Only `assets_temp/velora.svg` was selected and copied as `apps/console/src/assets/velora-mark.svg`. Source references remain untouched. No external font service or runtime image dependency is used. Branding was supplied by the repository owner; confirm ownership before redistributing trademarks.
 
 See [ADR 001](adr/001-foundation.md).
+
+## Operational boundary
+
+apps/cli is the only executable module; go.work joins it with Core. Core's application package is a narrow facade over shared services and infrastructure wiring. PostgreSQL transactions own password/session/reset atomicity and last-active-admin protection. Console uses generated shadcn-vue primitives and semantic Velora tokens; queries own server data and Pinia owns local navigation preferences. See authentication.md for lifecycle and authorization details.

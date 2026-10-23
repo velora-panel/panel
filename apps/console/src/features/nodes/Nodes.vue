@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
 import { ref } from 'vue'
 import { useQueryClient } from '@tanstack/vue-query'
 import { useForm } from 'vee-validate'
@@ -59,36 +61,32 @@ const submit = handleSubmit(async (values) => {
             ><Plus :size="16" /> Add Node</Button
           ></DialogTrigger
         ><DialogContent
-            class="dialog-content"
-            ><DialogTitle as="h2">Add a Node</DialogTitle
-            ><DialogDescription
-              >Register metadata only. Beacon connectivity is not available yet.
-              Administrator access is required.</DialogDescription
-            >
-            <form @submit="submit">
-              <FormField
-                id="node-name"
-                v-model="name"
-                label="Node name"
-                :error="errors.name"
-              /><FormField
-                id="node-description"
-                v-model="description"
-                label="Description"
-                :error="errors.description"
-              />
-              <p v-if="failure" role="alert" class="error">{{ failure }}</p>
-              <div class="actions">
-                <DialogClose as-child><Button>Cancel</Button></DialogClose
-                ><Button
-                  type="submit"
-                  variant="default"
-                  :disabled="isSubmitting"
-                  >Create Node</Button
-                >
-              </div>
-            </form></DialogContent
-          ></Dialog
+          ><DialogTitle as="h2">Add a Node</DialogTitle
+          ><DialogDescription
+            >Register metadata only. Beacon connectivity is not available yet.
+            Administrator access is required.</DialogDescription
+          >
+          <form @submit="submit">
+            <FormField
+              id="node-name"
+              v-model="name"
+              label="Node name"
+              :error="errors.name"
+            /><FormField
+              id="node-description"
+              v-model="description"
+              label="Description"
+              :error="errors.description"
+            />
+            <p v-if="failure" role="alert" class="error">{{ failure }}</p>
+            <div class="actions">
+              <DialogClose as-child><Button>Cancel</Button></DialogClose
+              ><Button type="submit" variant="default" :disabled="isSubmitting"
+                >Create Node</Button
+              >
+            </div>
+          </form></DialogContent
+        ></Dialog
       ></PageHeader
     ><State
       v-if="nodes.isPending.value"
@@ -106,7 +104,7 @@ const submit = handleSubmit(async (values) => {
       title="Your fleet starts here"
       description="Add your first Node to organize your compute infrastructure. No daemon connection is required."
     />
-    <section v-else class="card node-list">
+    <Card v-else class="node-list">
       <RouterLink
         v-for="node in nodes.data.value"
         :key="node.id"
@@ -115,10 +113,10 @@ const submit = handleSubmit(async (values) => {
         ><span
           ><strong>{{ node.name }}</strong
           ><small>{{ node.description }}</small></span
-        ><span class="badge">{{ node.status }}</span
+        ><Badge>{{ node.status }}</Badge
         ><span aria-hidden="true">↗</span></RouterLink
       >
-    </section>
+    </Card>
     <p class="small">Showing up to 100 most recently registered Nodes.</p>
   </main>
 </template>

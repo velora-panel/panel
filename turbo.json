@@ -9,7 +9,8 @@
     "COOKIE_SECURE",
     "REDIS_ENABLED",
     "REDIS_URL",
-    "LOG_LEVEL"
+    "LOG_LEVEL",
+    "MIGRATION_DATABASE_URL"
   ],
   "tasks": {
     "dev": {
@@ -59,6 +60,8 @@
     "tooling/**",
     ".golangci.yml",
     "packages/typescript-config/**",
-    "packages/eslint-config/**"
+    "packages/eslint-config/**",
+    "go.work",
+    "go.work.sum"
   ]
 }

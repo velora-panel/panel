@@ -12,8 +12,8 @@ export default defineConfig({
   use: { baseURL: 'http://localhost:15173', trace: 'retain-on-failure' },
   webServer: [
     {
-      command: 'go run ./cmd/velora',
-      cwd: '../core',
+      command: 'pnpm velora serve',
+      cwd: '../..',
       url: 'http://127.0.0.1:18080/api/v1/health/live',
       reuseExistingServer: false,
       env: {

@@ -40,5 +40,6 @@ export const node = {
 export const user = {
   id: node.id,
   email: 'admin@example.com',
-  disabled: false, role: 'admin' as const,
+  disabled: false,
+  role: 'admin' as const,
 }

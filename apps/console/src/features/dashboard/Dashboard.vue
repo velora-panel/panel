@@ -34,18 +34,18 @@ const nodes = useNodes()
       title="Overview unavailable"
     />
     <section v-else class="overview-grid">
-      <article class="card metric">
+      <Card class="metric">
         <p>Registered Nodes</p>
         <strong>{{ nodes.data.value?.length }}</strong
         ><small>Latest 100 metadata records</small>
-      </article>
-      <article class="card metric">
+      </Card>
+      <Card class="metric">
         <p>Beacon connectivity</p>
         <strong class="text-status">Not configured</strong
         ><small>External daemon integration is planned</small>
-      </article>
+      </Card>
     </section>
-    <section class="card details">
+    <Card class="details">
       <h2>A deliberate starting point</h2>
       <p>
         Velora Core manages access and your Node registry. Instances and
@@ -54,6 +54,6 @@ const nodes = useNodes()
       <RouterLink to="/blueprints" class="text-link"
         >Explore Blueprints <ArrowUpRight :size="16"
       /></RouterLink>
-    </section>
+    </Card>
   </main>
 </template>

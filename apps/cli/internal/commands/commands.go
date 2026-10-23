@@ -2,6 +2,7 @@ package commands
 
 import (
 	"context"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -42,11 +43,11 @@ type Runner struct {
 
 func (r Runner) Run(ctx context.Context, args []string) error {
 	if len(args) == 0 || args[0] == "help" || args[0] == "--help" || args[0] == "-h" {
-		fmt.Fprint(r.Out, Help)
+		_, _ = fmt.Fprint(r.Out, Help)
 		return nil
 	}
 	if args[0] == "version" {
-		fmt.Fprintln(r.Out, "velora 0.2.0")
+		_, _ = fmt.Fprintln(r.Out, "velora 0.2.0")
 		return nil
 	}
 	command := args[0]
@@ -66,6 +67,9 @@ func (r Runner) Run(ctx context.Context, args []string) error {
 	stdin := flags.Bool("password-stdin", false, "read credential JSON from stdin")
 	allow := flags.Bool("allow-destructive", false, "permit migration rollback")
 	if e := flags.Parse(rest); e != nil {
+		if errors.Is(e, flag.ErrHelp) {
+			return nil
+		}
 		return e
 	}
 	if flags.NArg() != 0 {
@@ -105,7 +109,7 @@ func (r Runner) Run(ctx context.Context, args []string) error {
 	case "serve":
 		return backend.Serve(ctx, r.Out)
 	case "doctor":
-		fmt.Fprintln(r.Out, "Database reachable. Schema initialized. Use migrate status to inspect migration history.")
+		_, _ = fmt.Fprintln(r.Out, "Database reachable. Schema initialized. Use migrate status to inspect migration history.")
 		return nil
 	}
 	switch action {
@@ -115,7 +119,7 @@ func (r Runner) Run(ctx context.Context, args []string) error {
 			return e
 		}
 		for _, u := range users {
-			fmt.Fprintf(r.Out, "%s\t%s\tdisabled=%t\n", u.Email, u.Role, u.Disabled)
+			_, _ = fmt.Fprintf(r.Out, "%s\t%s\tdisabled=%t\n", u.Email, u.Role, u.Disabled)
 		}
 		return nil
 	case "disable", "enable":
@@ -142,6 +146,6 @@ func (r Runner) Run(ctx context.Context, args []string) error {
 			return e
 		}
 	}
-	fmt.Fprintln(r.Out, "Account updated successfully.")
+	_, _ = fmt.Fprintln(r.Out, "Account updated successfully.")
 	return nil
 }

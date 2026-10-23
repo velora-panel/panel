@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
-resolve: { alias: { '@': resolve(import.meta.dirname, 'src') } },
+  resolve: { alias: { '@': resolve(import.meta.dirname, 'src') } },
   test: {
     environment: 'jsdom',
     setupFiles: ['src/test/setup.ts'],

@@ -19,3 +19,5 @@
 No SESSION_SECRET is required: sessions use random opaque tokens whose hashes are stored in PostgreSQL, not signed client-side state. No server secret belongs in a VITE_* variable. No wildcard CORS is enabled; same-origin deployment is intentional. Environment files are ignored and excluded from Docker contexts.
 
 Core uses ten maximum PostgreSQL connections, one minimum, a one-hour connection lifetime and a five-second connection timeout. Requests receive a five-second context deadline; readiness uses two seconds. HTTP read/write/idle limits are 10/15/60 seconds. Body limit is 16 KiB. Shutdown has ten seconds to drain.
+
+`MIGRATION_DATABASE_URL` optionally selects a separate owner/migration role for `velora migrate` commands. It defaults to DATABASE_URL when absent. Runtime commands always use DATABASE_URL. Keep both in ignored local environment files or a secret manager. Native binaries consume exported environment; only the repository pnpm wrapper loads root .env. See migrations.md for schema permissions and grants.

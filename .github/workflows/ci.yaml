@@ -33,7 +33,9 @@ jobs:
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: apps/core/go.mod
-          cache-dependency-path: apps/core/go.sum
+          cache-dependency-path: |
+            apps/core/go.sum
+            apps/cli/go.sum
       - name: Locate pnpm store
         id: pnpm-store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
@@ -44,6 +46,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm test:integration
+      - run: pnpm test:cli
       - run: pnpm --filter @velora/console exec playwright install --with-deps chromium
       - run: pnpm test:e2e
       - run: pnpm audit --audit-level high

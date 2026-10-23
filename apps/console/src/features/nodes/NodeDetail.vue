@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuery } from '@tanstack/vue-query'
@@ -35,9 +37,9 @@ const node = useQuery({
         :title="node.data.value.name"
         :description="node.data.value.description"
       />
-      <section class="card details">
+      <Card class="details">
         <h2>Registration</h2>
-        <span class="badge">{{ node.data.value.status }}</span>
+        <Badge>{{ node.data.value.status }}</Badge>
         <dl>
           <dt>Node ID</dt>
           <dd>{{ node.data.value.id }}</dd>
@@ -48,7 +50,7 @@ const node = useQuery({
           This is a metadata record. Beacon communication and workload
           management are not implemented.
         </p>
-      </section></template
+      </Card></template
     >
   </main>
 </template>

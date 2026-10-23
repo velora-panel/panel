@@ -56,21 +56,21 @@ func (i Input) Read(email string, stdin bool) (Credentials, error) {
 		c.Email = email
 		var e error
 		if c.Email == "" {
-			fmt.Fprint(i.Out, "Email: ")
+			_, _ = fmt.Fprint(i.Out, "Email: ")
 			c.Email, e = line(i.In)
 			if e != nil {
 				return c, e
 			}
 		}
-		fmt.Fprint(i.Out, "Password: ")
+		_, _ = fmt.Fprint(i.Out, "Password: ")
 		c.Password, e = i.Password()
-		fmt.Fprintln(i.Out)
+		_, _ = fmt.Fprintln(i.Out)
 		if e != nil {
 			return c, fmt.Errorf("cannot read terminal password: %w", e)
 		}
-		fmt.Fprint(i.Out, "Confirm password: ")
+		_, _ = fmt.Fprint(i.Out, "Confirm password: ")
 		c.Confirmation, e = i.Password()
-		fmt.Fprintln(i.Out)
+		_, _ = fmt.Fprintln(i.Out)
 		if e != nil {
 			return c, fmt.Errorf("cannot read password confirmation: %w", e)
 		}
@@ -80,7 +80,7 @@ func (i Input) Read(email string, stdin bool) (Credentials, error) {
 	}
 	c.Email = strings.ToLower(strings.TrimSpace(c.Email))
 	if c.Password != c.Confirmation {
-		return c, fmt.Errorf("Passwords do not match.")
+		return c, fmt.Errorf("passwords do not match")
 	}
 	if e := application.ValidatePassword(c.Password); e != nil {
 		return c, e

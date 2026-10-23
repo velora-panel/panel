@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defined } from "@/lib/defined"
+import { defined } from '@/lib/defined'
 import type { TooltipRootEmits, TooltipRootProps } from 'reka-ui'
 import { TooltipRoot, useForwardPropsEmits } from 'reka-ui'
 

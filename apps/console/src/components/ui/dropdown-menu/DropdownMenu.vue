@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defined } from "@/lib/defined"
+import { defined } from '@/lib/defined'
 import type { DropdownMenuRootEmits, DropdownMenuRootProps } from 'reka-ui'
 import { DropdownMenuRoot, useForwardPropsEmits } from 'reka-ui'
 

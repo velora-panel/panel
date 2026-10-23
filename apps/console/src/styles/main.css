@@ -1,8 +1,6 @@
-
-
 @import 'tailwindcss';
-@import "tw-animate-css";
-@import "shadcn-vue/tailwind.css";
+@import 'tw-animate-css';
+@import './vendor/shadcn-vue.css';
 
 @custom-variant dark (&:is(.dark *));
 :root {
@@ -102,14 +100,8 @@ body {
   margin: 0;
 }
 button,
-input {
-  font: inherit;
-}
 button,
 a,
-input {
-  -webkit-tap-highlight-color: transparent;
-}
 button,
 a {
   transition:
@@ -157,18 +149,6 @@ small,
   margin-bottom: 10px;
   color: var(--velora-muted);
 }
-.app-shell {
-  display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
-  min-height: 100vh;
-}
-.sidebar {
-  border-right: 1px solid var(--border);
-  padding: 30px 18px;
-  display: flex;
-  flex-direction: column;
-  background: #0b160f;
-}
 .brand {
   display: flex;
   align-items: center;
@@ -201,7 +181,7 @@ nav a {
 }
 nav a.router-link-exact-active {
   color: var(--primary);
-  background: #1a2c1c;
+  background: var(--elevated);
 }
 nav a:hover {
   background: var(--surface);
@@ -263,6 +243,7 @@ nav a:hover {
   border-radius: 9px;
 }
 .welcome {
+  flex-direction: row;
   padding: 34px;
   display: flex;
   justify-content: space-between;
@@ -278,17 +259,8 @@ nav a:hover {
   font-size: 0.85rem;
 }
 .welcome-icon {
-  color: #3b6746;
+  color: var(--velora-accent);
   margin: 0 35px;
-}
-.badge {
-  display: inline-block;
-  padding: 5px 9px;
-  border: 1px solid #35503a;
-  border-radius: 4px;
-  font-size: 0.62rem;
-  color: var(--primary);
-  letter-spacing: 0.06em;
 }
 .text-link {
   display: inline-flex;
@@ -331,35 +303,6 @@ nav a:hover {
 .details .badge {
   margin-top: 18px;
 }
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 15px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--foreground);
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-.button:hover {
-  background: var(--elevated);
-}
-.button.primary {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #14200f;
-  font-weight: 600;
-}
-.button.primary:hover {
-  background: #b0ff83;
-}
-.button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 .page-footer {
   padding: 20px 46px;
   display: flex;
@@ -390,31 +333,31 @@ nav a:hover {
   color: var(--primary);
   font-size: 0.85rem;
 }
-.station-list {
+.node-list {
   overflow: hidden;
 }
-.station-row {
+.node-row {
   display: flex;
   align-items: center;
   gap: 24px;
   padding: 23px;
   border-bottom: 1px solid var(--border);
 }
-.station-row:last-child {
+.node-row:last-child {
   border: 0;
 }
-.station-row > span:first-child {
+.node-row > span:first-child {
   flex: 1;
 }
-.station-row strong {
+.node-row strong {
   font-size: 0.9rem;
   font-weight: 550;
 }
-.station-row small {
+.node-row small {
   display: block;
   margin-top: 6px;
 }
-.station-row:hover {
+.node-row:hover {
   background: var(--elevated);
 }
 .page > .small {
@@ -425,67 +368,14 @@ nav a:hover {
   gap: 8px;
   margin: 22px 0;
 }
-label {
-  font-size: 0.8rem;
-}
-input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  background: var(--background);
-  color: var(--foreground);
-}
 .error {
   color: var(--destructive);
   font-size: 0.8rem;
-}
-.dialog-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000a;
-  z-index: 20;
-}
-.dialog-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(480px, calc(100% - 32px));
-  padding: 28px;
-  z-index: 21;
-}
-.dialog-content > p {
-  font-size: 0.8rem;
-  margin-top: 12px;
 }
 .actions {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-}
-.dropdown {
-  padding: 6px;
-  z-index: 30;
-  min-width: 170px;
-}
-.menu-item {
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  outline: none;
-}
-.menu-item[data-highlighted] {
-  background: var(--elevated);
-}
-.tooltip {
-  background: var(--elevated);
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 0.75rem;
-  z-index: 40;
 }
 .login-page {
   min-height: 100vh;
@@ -505,17 +395,17 @@ input {
 .login-intro .eyebrow {
   margin-top: 30px;
 }
-.login-intro .badge {
+.login-intro [data-slot='badge'] {
   margin-top: 35px;
 }
 .login-form {
   padding: 32px;
 }
-.login-form > p {
+.login-form form > p {
   font-size: 0.85rem;
   margin-top: 8px;
 }
-.login-form > .button {
+.login-form [data-slot='button'] {
   width: 100%;
   margin: 12px 0;
 }
@@ -531,20 +421,11 @@ dd {
   margin: 6px 0;
   overflow-wrap: anywhere;
 }
-.collapsed {
-  grid-template-columns: 84px minmax(0, 1fr);
-}
 .collapsed .brand > span,
 .collapsed nav span,
 .collapsed .nav-label,
 .collapsed .sidebar-footer {
   display: none;
-}
-.collapsed nav {
-  margin-top: 50px;
-}
-.collapsed .sidebar {
-  padding: 30px 10px;
 }
 .skip-link {
   position: fixed;
@@ -563,12 +444,6 @@ dd {
   .sidebar {
     padding: 24px 8px;
   }
-  .brand > span,
-  nav span,
-  .nav-label,
-  .sidebar-footer {
-    display: none;
-  }
   nav {
     margin-top: 35px;
   }
@@ -583,6 +458,7 @@ dd {
     flex-direction: column;
   }
   .welcome {
+    flex-direction: row;
     padding: 25px;
   }
   .welcome-icon {
@@ -603,11 +479,11 @@ dd {
   .login-intro h1 {
     font-size: 2.1rem;
   }
-  .login-intro .badge,
+  .login-intro [data-slot='badge'],
   .login-intro > p:not(.eyebrow) {
     display: none;
   }
-  .station-row {
+  .node-row {
     gap: 12px;
     padding: 18px 12px;
   }
@@ -630,10 +506,9 @@ dd {
 }
 
 .page-header h1,
-.station-row strong {
+.node-row strong {
   overflow-wrap: anywhere;
 }
-
 
 @layer base {
   * {
@@ -644,9 +519,34 @@ dd {
     @apply font-sans;
   }
 }
-.settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1.5rem; }
-.account-create { margin-top: 1.5rem; max-width: 42rem; }
-[data-slot='card-content'] form { display: grid; gap: 1rem; margin-top: 1rem; }
-[data-slot='sidebar'] .brand { padding: 1rem; }
-[data-state='collapsed'] .brand > span { display: none; }
-[data-slot='dialog-content'] form { display: grid; gap: 1rem; }
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 1.5rem;
+}
+.account-create {
+  margin-top: 1.5rem;
+  max-width: 42rem;
+}
+[data-slot='card-content'] form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+[data-slot='sidebar'] .brand {
+  padding: 1rem;
+}
+[data-state='collapsed'] .brand > span {
+  display: none;
+}
+[data-slot='dialog-content'] form {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (max-width: 800px) {
+  .welcome {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -4,3 +4,6 @@ packages:
 allowBuilds:
   vue-demi: true
   esbuild: true
+# Vite's optional CSS compiler: avoid its legacy vulnerable source-map parser.
+overrides:
+  stylus@0.57.0: 0.64.0

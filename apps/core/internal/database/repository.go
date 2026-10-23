@@ -44,12 +44,12 @@ func (r *Repository) CreateUser(ctx context.Context, email, hash string) error {
 	_, err := r.queries.CreateUser(ctx, generated.CreateUserParams{Email: email, PasswordHash: hash, Role: "admin"})
 	return translate(err)
 }
-func (r *Repository) SaveSession(ctx context.Context, hash, id string, expires time.Time) error {
+func (r *Repository) SaveSession(ctx context.Context, hash, id, passwordHash string, expires time.Time) error {
 	parsed, err := uuid.Parse(id)
 	if err != nil {
 		return domain.ErrInvalid
 	}
-	_, err = r.queries.CreateSession(ctx, generated.CreateSessionParams{TokenHash: hash, ID: parsed, ExpiresAt: expires})
+	_, err = r.queries.CreateSession(ctx, generated.CreateSessionParams{TokenHash: hash, ID: parsed, ExpiresAt: expires, PasswordHash: passwordHash})
 	return translate(err)
 }
 func (r *Repository) SessionUser(ctx context.Context, hash string) (domain.User, error) {

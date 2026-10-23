@@ -9,7 +9,7 @@ func (e ValidationError) Unwrap() error { return ErrInvalid }
 func Invalid(message string) error      { return ValidationError{Message: message} }
 
 var ErrLastAdmin = fmt.Errorf("the last active administrator cannot be disabled or demoted: %w", ErrConflict)
-var ErrSchema = fmt.Errorf("Database schema is not initialized. Run: velora migrate up")
+var ErrSchema = fmt.Errorf("database schema is not initialized. Run: velora migrate up")
 
 type AccountInput struct {
 	CurrentPassword string `json:"current_password"`

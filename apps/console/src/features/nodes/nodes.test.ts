@@ -26,9 +26,7 @@ it('renders pending, failure, retry, empty and list states', async () => {
   get.mockResolvedValue({ data: [node], response: new Response() })
   const loaded = mount(Nodes, await plugins())
   await vi.waitFor(() => expect(loaded.text()).toContain('West'))
-  expect(loaded.get('.node-row').attributes('href')).toBe(
-    `/nodes/${node.id}`,
-  )
+  expect(loaded.get('.node-row').attributes('href')).toBe(`/nodes/${node.id}`)
 })
 it('validates and submits Node metadata, reports failures and closes on success', async () => {
   vi.spyOn(api, 'GET').mockResolvedValue({ data: [], response: new Response() })
@@ -73,9 +71,7 @@ it('renders Node detail and handles unavailable records', async () => {
   pending.unmount()
   get.mockRejectedValue(new Error('missing'))
   const missing = mount(NodeDetail, await plugins('/nodes/id'))
-  await vi.waitFor(() =>
-    expect(missing.text()).toContain('Node unavailable'),
-  )
+  await vi.waitFor(() => expect(missing.text()).toContain('Node unavailable'))
   missing.unmount()
   get.mockResolvedValue({ data: node, response: new Response() })
   const detail = mount(NodeDetail, await plugins('/nodes/id'))

@@ -16,4 +16,6 @@ func TestError(t *testing.T) {
 	require.Contains(t, s, "permission denied")
 	require.Equal(t, "[REDACTED]", Error(errors.New("pass"), "postgres://user:pass@localhost/db"))
 	require.Equal(t, "diagnostic", Error(errors.New("diagnostic"), "postgres://user@localhost/db"))
+	require.NotContains(t, Error(errors.New("authorization: Bearer opaque-token\ncookie: sid=first; other=second")), "opaque-token")
+	require.NotContains(t, Error(errors.New("cookie: sid=first; other=second")), "second")
 }

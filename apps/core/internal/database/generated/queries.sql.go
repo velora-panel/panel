@@ -73,17 +73,24 @@ func (q *Queries) CreateReset(ctx context.Context, arg CreateResetParams) error 
 }
 
 const createSession = `-- name: CreateSession :one
-INSERT INTO sessions (token_hash,user_id,expires_at) SELECT $1,id,$3 FROM users WHERE id=$2 AND NOT disabled RETURNING token_hash
+WITH account AS (SELECT id FROM users WHERE id=$2 AND password_hash=$4 AND NOT disabled FOR UPDATE)
+INSERT INTO sessions (token_hash,user_id,expires_at) SELECT $1,id,$3 FROM account RETURNING token_hash
 `
 
 type CreateSessionParams struct {
-	TokenHash string
-	ID        uuid.UUID
-	ExpiresAt time.Time
+	TokenHash    string
+	ID           uuid.UUID
+	ExpiresAt    time.Time
+	PasswordHash string
 }
 
 func (q *Queries) CreateSession(ctx context.Context, arg CreateSessionParams) (string, error) {
-	row := q.db.QueryRow(ctx, createSession, arg.TokenHash, arg.ID, arg.ExpiresAt)
+	row := q.db.QueryRow(ctx, createSession,
+		arg.TokenHash,
+		arg.ID,
+		arg.ExpiresAt,
+		arg.PasswordHash,
+	)
 	var token_hash string
 	err := row.Scan(&token_hash)
 	return token_hash, err

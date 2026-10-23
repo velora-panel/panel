@@ -13,10 +13,9 @@ import (
 
 type Repository interface {
 	Credentials(context.Context, string) (domain.User, string, error)
-	SaveSession(context.Context, string, string, time.Time) error
+	SaveSession(context.Context, string, string, string, time.Time) error
 	SessionUser(context.Context, string) (domain.User, error)
 	DeleteSession(context.Context, string) error
-	CreateUser(context.Context, string, string) error
 }
 type Service struct {
 	repo  Repository
@@ -27,13 +26,6 @@ func New(repo Repository) *Service { return &Service{repo: repo, dummy: HashPass
 func ValidCredentials(email, password string) bool {
 	addr, e := mail.ParseAddress(email)
 	return e == nil && addr.Address == email && len(email) <= 254 && len(password) >= 12 && len(password) <= 128
-}
-func (s *Service) Bootstrap(ctx context.Context, email, password string) error {
-	email = strings.ToLower(strings.TrimSpace(email))
-	if !ValidCredentials(email, password) {
-		return ValidateAccount(email, password, "admin")
-	}
-	return s.repo.CreateUser(ctx, email, HashPassword(password))
 }
 func (s *Service) Login(ctx context.Context, email, password string) (domain.User, string, error) {
 	email = strings.ToLower(strings.TrimSpace(email))
@@ -52,7 +44,10 @@ func (s *Service) Login(ctx context.Context, email, password string) (domain.Use
 		return domain.User{}, "", domain.ErrUnauthorized
 	}
 	token := NewToken()
-	if err = s.repo.SaveSession(ctx, TokenHash(token), user.ID, time.Now().Add(12*time.Hour)); err != nil {
+	if err = s.repo.SaveSession(ctx, TokenHash(token), user.ID, hash, time.Now().Add(12*time.Hour)); err != nil {
+		if errors.Is(err, domain.ErrNotFound) {
+			return domain.User{}, "", domain.ErrUnauthorized
+		}
 		return domain.User{}, "", err
 	}
 	return user, token, nil

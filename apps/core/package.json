@@ -11,7 +11,7 @@
     "test:integration": "go test -race -tags=integration ./internal/database/...",
     "format": "go tool goimports -w internal application migrations",
     "format:check": "node ../../tooling/go-format.mjs",
-    "codegen": "go tool sqlc generate",
+    "codegen": "GOWORK=off go tool sqlc generate",
     "clean": "rm -rf bin coverage",
     "vuln": "go tool govulncheck ./..."
   }

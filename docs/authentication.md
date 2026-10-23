@@ -1,0 +1,13 @@
+# Authentication and account administration
+
+Core stores Argon2id hashes (64 MiB, three passes, two lanes, independent salts). Session identifiers contain 256 random bits; PostgreSQL stores only SHA-256 hashes with a 12-hour expiry. Cookies are HttpOnly, SameSite=Strict and Secure in production. Production requires an HTTPS origin. Mutations enforce same-origin and JSON requests, and sensitive endpoints are rate limited. Login failures do not distinguish unknown accounts, wrong passwords or disabled accounts.
+
+Authenticated routes resolve the server session for every request. Role checks exist both in HTTP middleware and application services. Ordinary users can read Nodes and change their own profile/password. Administrators can create/list/view accounts, change roles, disable/enable accounts, and revoke sessions. Sensitive web operations require the administrator's current password. No public registration exists.
+
+Account changes revoke sessions and outstanding reset tokens. Password changes verify the current password, atomically update the credential, remove reset tokens and revoke all other sessions while retaining the current one. Session insertion locks and checks the verified credential version, preventing a concurrent password reset from admitting a stale-password login. Last-active-admin checks use a transaction-scoped PostgreSQL advisory lock, so concurrent demotion/disable requests cannot remove every active administrator.
+
+Reset tokens are random, hashed, expire after 15 minutes, and are consumed transactionally once. Reset changes invalidate all sessions. Public reset request/consumption routes are deliberately unavailable because no email delivery is configured. `velora admin reset-password` uses the same lifecycle through privileged local access without displaying tokens. Future email delivery needs a verified sender, generic request responses, recipient/IP rate limits, a secure delivery adapter and tests before any public routes are enabled.
+
+The Console uses TanStack Query for server account state; Pinia holds only navigation preferences. Protected navigation rechecks the server. Logout revokes the session before clearing query caches. On a 401, Console checks whether the session remains valid before redirecting, so incorrect reauthentication does not sign a valid user out. Confirmed expiry/revocation clears sensitive caches and returns to login. No authentication token is stored in localStorage.
+
+Account lists are bounded to 200 records. Public reset delivery, MFA, audit-log browsing and distributed rate limiting are not implemented. Current limiters are per Core process; multi-replica deployments need a shared enforcement strategy.

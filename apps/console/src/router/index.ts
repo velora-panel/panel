@@ -69,4 +69,8 @@ export const router = createRouter({
   ],
 })
 
-router.beforeEach((to) => to.matched.some((record) => record.components?.default === Shell) ? requireSession() : true)
+router.beforeEach((to) =>
+  to.matched.some((record) => record.components?.default === Shell)
+    ? requireSession()
+    : true,
+)

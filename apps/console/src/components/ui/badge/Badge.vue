@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defined } from "@/lib/defined"
+import { defined } from '@/lib/defined'
 import type { PrimitiveProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import type { BadgeVariants } from '.'
@@ -8,10 +8,12 @@ import { cn } from 'cn'
 import { Primitive } from 'reka-ui'
 import { badgeVariants } from '.'
 
-const props = defineProps<PrimitiveProps & {
-  variant?: BadgeVariants['variant']
-  class?: HTMLAttributes['class']
-}>()
+const props = defineProps<
+  PrimitiveProps & {
+    variant?: BadgeVariants['variant']
+    class?: HTMLAttributes['class']
+  }
+>()
 
 const delegatedProps = reactiveOmit(props, 'class')
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defined } from "@/lib/defined"
+import { defined } from '@/lib/defined'
 import type { ToasterProps } from 'vue-sonner'
 
 import {
@@ -32,11 +32,13 @@ const delegatedProps = reactiveOmit(props, 'class', 'toastOptions')
       '--gray5': 'var(--border)',
       '--gray12': 'var(--popover-foreground)',
     }"
-    :toast-options="props.toastOptions ?? {
-      classes: {
-        toast: 'rounded-2xl',
-      },
-    }"
+    :toast-options="
+      props.toastOptions ?? {
+        classes: {
+          toast: 'rounded-2xl',
+        },
+      }
+    "
     v-bind="defined(delegatedProps)"
   >
     <template #success-icon>

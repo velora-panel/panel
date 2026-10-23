@@ -7,6 +7,7 @@ import (
 )
 
 var urls = regexp.MustCompile(`(?i)(?:postgres(?:ql)?|rediss?)://[^\s]+`)
+var headers = regexp.MustCompile(`(?i)(authorization|cookie)\s*[:=]\s*[^\r\n]+`)
 var fields = regexp.MustCompile(`(?i)(password|token|secret|cookie|authorization)\s*[=:]\s*(?:"[^"]*"|'[^']*'|[^\s;,]+)`)
 
 // Error retains operational diagnostics while removing configured and labeled secrets.
@@ -14,7 +15,8 @@ func Error(err error, secrets ...string) string {
 	if err == nil {
 		return ""
 	}
-	message := fields.ReplaceAllString(err.Error(), "$1=[REDACTED]")
+	message := headers.ReplaceAllString(err.Error(), "$1=[REDACTED]")
+	message = fields.ReplaceAllString(message, "$1=[REDACTED]")
 	for _, secret := range secrets {
 		if secret == "" {
 			continue

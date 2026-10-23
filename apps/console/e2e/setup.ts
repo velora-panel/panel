@@ -7,18 +7,23 @@ export default function setup() {
   process.env.E2E_EMAIL = `browser-${randomBytes(8).toString('hex')}@example.com`
   process.env.E2E_PASSWORD = randomBytes(24).toString('base64url')
   const options = {
-    cwd: '../core',
+    cwd: '../..',
     env: {
       ...process.env,
       DATABASE_URL: database,
+      MIGRATION_DATABASE_URL: database,
       APP_ENV: 'development',
       PUBLIC_URL: 'http://localhost:15173',
       COOKIE_SECURE: 'false',
     },
   }
-  execFileSync('go', ['run', './cmd/velora', 'migrate'], options)
-  execFileSync('go', ['run', './cmd/velora', 'admin'], {
+  execFileSync('pnpm', ['velora', 'migrate', 'up'], options)
+  execFileSync('pnpm', ['velora', 'admin', 'create', '--password-stdin'], {
     ...options,
-    input: `${process.env.E2E_EMAIL}\n${process.env.E2E_PASSWORD}\n`,
+    input: JSON.stringify({
+      email: process.env.E2E_EMAIL,
+      password: process.env.E2E_PASSWORD,
+      password_confirmation: process.env.E2E_PASSWORD,
+    }),
   })
 }

@@ -3,7 +3,8 @@ INSERT INTO users (email, password_hash, role) VALUES ($1,$2,$3) RETURNING *;
 -- name: UserByEmail :one
 SELECT * FROM users WHERE email=$1;
 -- name: CreateSession :one
-INSERT INTO sessions (token_hash,user_id,expires_at) SELECT $1,id,$3 FROM users WHERE id=$2 AND NOT disabled RETURNING token_hash;
+WITH account AS (SELECT id FROM users WHERE id=$2 AND password_hash=$4 AND NOT disabled FOR UPDATE)
+INSERT INTO sessions (token_hash,user_id,expires_at) SELECT $1,id,$3 FROM account RETURNING token_hash;
 -- name: SessionUser :one
 SELECT users.* FROM users JOIN sessions ON sessions.user_id=users.id WHERE sessions.token_hash=$1 AND sessions.expires_at > now() AND NOT users.disabled;
 -- name: DeleteSession :exec

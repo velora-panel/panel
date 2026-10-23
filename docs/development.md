@@ -6,7 +6,7 @@ The latest npm TypeScript release exceeded both ESLint and OpenAPI generator pee
 
 ## Database changes
 
-Create sequential Goose SQL migrations under apps/core/migrations with Up and Down sections. Add only parameterized queries under apps/core/queries. Run `pnpm --filter @velora/core codegen`, migration integration tests and codegen freshness. Existing deployed migrations must never be edited. `pnpm --filter @velora/core migrate` explicitly applies embedded migrations. Back up production data first. The initial down migration drops the foundation tables and is exercised only inside an isolated test schema.
+Create sequential Goose SQL migrations under apps/core/migrations with Up and Down sections. Add only parameterized queries under apps/core/queries. Run `pnpm --filter @velora/core codegen`, migration integration tests and codegen freshness. Existing deployed migrations must never be edited. `pnpm velora migrate up` explicitly applies embedded migrations. Back up production data first. The initial down migration drops the foundation tables and is exercised only inside an isolated test schema.
 
 ## API changes
 
@@ -25,3 +25,11 @@ Edit docs/openapi.json, update handlers and tests, then run `pnpm --filter @velo
 ## Releases and automation
 
 All workspace packages are private. Changesets prepares future release notes but nothing publishes automatically. GitHub Actions uses immutable action commits; update them by resolving the upstream release tag and reviewing the change. Container base images use readable release tags; pin deployment-specific digests after your registry/security review. CI runs the same checks as local commands, with an isolated PostgreSQL service and Chromium.
+
+The root `pnpm velora` command replaces package-specific migration/admin scripts. Run `pnpm velora migrate up`, then `pnpm velora admin create`; `pnpm dev` starts the CLI's serve command and Vite. Core is a library module; build the native executable with `pnpm --filter @velora/cli build`. Production can run it without JavaScript.
+
+shadcn-vue was initialized with the supported CLI (Reka base, reka-nova style, Tailwind v4). `apps/console/components.json` records aliases and configuration. Add controls with `cd apps/console && pnpm dlx shadcn-vue@2.8.2 add <component>`. Preserve strict optional-property handling through the tested defined helper, and map colors to the semantic variables in src/styles/main.css.
+
+The generator is invoked on demand rather than installed as an application dependency. Its MIT-licensed Tailwind support stylesheet is copied from shadcn-vue 2.8.2 under src/styles/vendor, alongside the upstream license. This avoids retaining the generator's vulnerable transitive glob/URI tooling in the application install. Review upstream advisories before running future generators, and refresh the vendored stylesheet when deliberately upgrading generated components.
+
+The retained FormField composition has a specific purpose: it binds generated Label/Input primitives to existing form validation and consistent aria-invalid/aria-describedby error associations. It is not a parallel input implementation. Generated generic Button/Input/Card/Badge replacements are imported directly elsewhere.

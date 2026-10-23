@@ -85,7 +85,7 @@ func (e *Engine) Serve(ctx context.Context, out io.Writer) error {
 	if cfg.RedisEnabled {
 		options, err := redis.ParseURL(cfg.RedisURL)
 		if err != nil {
-			return fmt.Errorf("Redis configuration: %s", redact.Error(err, cfg.RedisURL))
+			return fmt.Errorf("redis configuration: %s", redact.Error(err, cfg.RedisURL))
 		}
 		client := redis.NewClient(options)
 		defer func() { _ = client.Close() }()
@@ -139,14 +139,14 @@ func Migrate(ctx context.Context, get func(string) string, action string, out io
 		var version int64
 		version, e = provider.GetDBVersion(bounded)
 		if e == nil {
-			fmt.Fprintln(out, version)
+			_, _ = fmt.Fprintln(out, version)
 		}
 	case "status":
 		var status []*goose.MigrationStatus
 		status, e = provider.Status(bounded)
 		if e == nil {
 			for _, item := range status {
-				fmt.Fprintf(out, "%d %s\n", item.Source.Version, item.State)
+				_, _ = fmt.Fprintf(out, "%d %s\n", item.Source.Version, item.State)
 			}
 		}
 	default:

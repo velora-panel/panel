@@ -22,7 +22,8 @@
     "clean": "turbo run clean",
     "changeset": "changeset",
     "codegen:check": "node tooling/codegen-check.mjs",
-    "velora": "node tooling/velora.mjs"
+    "velora": "node tooling/velora.mjs",
+    "test:cli": "python3 tooling/tests/cli-terminal.py"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

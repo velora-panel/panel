@@ -69,7 +69,7 @@ func DatabaseURL(get func(string) string, migration bool) (string, error) {
 	}
 	u, e := url.Parse(value)
 	if e != nil || u.Host == "" || (u.Scheme != "postgres" && u.Scheme != "postgresql") {
-		return "", fmt.Errorf("Set a valid PostgreSQL DATABASE_URL (or MIGRATION_DATABASE_URL for migrations)")
+		return "", fmt.Errorf("set a valid PostgreSQL DATABASE_URL (or MIGRATION_DATABASE_URL for migrations)")
 	}
 	return value, nil
 }
