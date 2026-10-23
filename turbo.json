@@ -1,0 +1,64 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "DATABASE_URL",
+    "PUBLIC_URL",
+    "APP_ENV",
+    "HTTP_HOST",
+    "HTTP_PORT",
+    "COOKIE_SECURE",
+    "REDIS_ENABLED",
+    "REDIS_URL",
+    "LOG_LEVEL"
+  ],
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "bin/**"]
+    },
+    "lint": {},
+    "lint:fix": {
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "outputs": ["coverage/**"]
+    },
+    "test:coverage": {
+      "outputs": ["coverage/**"]
+    },
+    "check": {
+      "dependsOn": ["lint", "typecheck", "test:coverage", "build"]
+    },
+    "format": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "codegen": {
+      "cache": false
+    },
+    "test:integration": {
+      "cache": false
+    },
+    "test:e2e": {
+      "cache": false
+    },
+    "@velora/api-client#build": {
+      "outputs": []
+    }
+  },
+  "globalDependencies": [
+    "tooling/**",
+    ".golangci.yml",
+    "packages/typescript-config/**",
+    "packages/eslint-config/**"
+  ]
+}

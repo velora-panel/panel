@@ -1,0 +1,8 @@
+pnpm-lock.yaml
+node_modules
+**/dist
+**/coverage
+**/.turbo
+assets_temp
+apps/core/internal/database/generated
+packages/api-client/src/schema.d.ts

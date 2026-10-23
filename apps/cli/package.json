@@ -1,0 +1,19 @@
+{
+  "name": "@velora/cli",
+  "private": true,
+  "scripts": {
+    "dev": "node ../../tooling/velora.mjs serve",
+    "build": "go build -o bin/velora ./cmd/velora",
+    "typecheck": "go vet ./...",
+    "lint": "go vet ./... && GOWORK=off go tool -modfile=../core/go.mod golangci-lint run -c ../../.golangci.yml",
+    "lint:fix": "GOWORK=off go tool -modfile=../core/go.mod golangci-lint run --fix -c ../../.golangci.yml",
+    "test": "go test -race ./...",
+    "test:coverage": "mkdir -p coverage && go test -race -coverprofile=coverage/unit.out ./... && node ../../tooling/go-coverage.mjs coverage/unit.out",
+    "format": "GOWORK=off go tool -modfile=../core/go.mod goimports -w cmd internal",
+    "format:check": "node ../../tooling/go-format.mjs",
+    "clean": "rm -rf bin coverage"
+  },
+  "dependencies": {
+    "@velora/core": "workspace:*"
+  }
+}

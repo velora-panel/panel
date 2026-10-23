@@ -1,0 +1,39 @@
+{
+  "name": "velora",
+  "private": true,
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": ">=24.19.0 <25"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "format": "prettier --write . && pnpm --filter @velora/core format && pnpm --filter @velora/cli format",
+    "format:check": "prettier --check . && pnpm --filter @velora/core format:check && pnpm --filter @velora/cli format:check",
+    "check": "pnpm format:check && turbo run check && pnpm codegen:check",
+    "codegen": "turbo run codegen",
+    "test:integration": "pnpm --filter @velora/core test:integration",
+    "test:e2e": "pnpm --filter @velora/console test:e2e",
+    "clean": "turbo run clean",
+    "changeset": "changeset",
+    "codegen:check": "node tooling/codegen-check.mjs",
+    "velora": "node tooling/velora.mjs"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.11.1",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "turbo": "^2.11.10",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.0"
+  }
+}

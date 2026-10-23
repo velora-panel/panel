@@ -1,0 +1,18 @@
+{
+  "name": "@velora/core",
+  "private": true,
+  "scripts": {
+    "build": "go build ./...",
+    "lint": "go vet ./... && go tool golangci-lint run -c ../../.golangci.yml",
+    "lint:fix": "go tool golangci-lint run --fix -c ../../.golangci.yml",
+    "typecheck": "go vet ./...",
+    "test": "go test -race ./...",
+    "test:coverage": "mkdir -p coverage && go test -race -coverprofile=coverage/unit.out ./... && node ../../tooling/go-coverage.mjs coverage/unit.out",
+    "test:integration": "go test -race -tags=integration ./internal/database/...",
+    "format": "go tool goimports -w internal application migrations",
+    "format:check": "node ../../tooling/go-format.mjs",
+    "codegen": "go tool sqlc generate",
+    "clean": "rm -rf bin coverage",
+    "vuln": "go tool govulncheck ./..."
+  }
+}
